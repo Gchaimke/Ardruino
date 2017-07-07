@@ -133,25 +133,32 @@ void loop() {
 }
 
 void wheelsMove(int a, int b) {
-  if (a > 0 && b > 0) {  //forword
+  // Иди вперед
+  if (a > 0 && b > 0) {    
     digitalWrite(speed1_1, SPEED * a);
     digitalWrite(speed1_2, 0);
     digitalWrite(speed2_1, SPEED * b);
     digitalWrite(speed2_2, 0);
-  } else if(a > 0 && b == 0){ //right
+  } 
+  // Поверни на вправо
+  else if(a > 0 && b == 0){
     digitalWrite(speed1_1, SPEED * a);
     digitalWrite(speed1_2, 0);
     digitalWrite(speed2_1, 0);
-    digitalWrite(speed2_2, SPEED * b);
-  }else if(a == 0 && b > 0){ //left
+    digitalWrite(speed2_2, 0);
+  }
+  // Поверни на лево
+  else if(a == 0 && b > 0){
     digitalWrite(speed1_1, 0);
-    digitalWrite(speed1_2, SPEED * a);
+    digitalWrite(speed1_2, 0);
     digitalWrite(speed2_1, SPEED * b);
     digitalWrite(speed2_2, 0);
-  }else{ //beckword
+  }
+  // Иди назад
+  else{
     digitalWrite(speed1_1, 0);
-    digitalWrite(speed1_2, SPEED * a);
+    digitalWrite(speed1_2, SPEED);
     digitalWrite(speed2_1, 0);
-    digitalWrite(speed2_2, SPEED * b);
+    digitalWrite(speed2_2, SPEED);
   }
 }
