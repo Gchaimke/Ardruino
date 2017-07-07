@@ -48,6 +48,7 @@ void loop() {
     Serial.print(ultraright.Ranging(CM)); // CM or INC
     Serial.println(" cm" );
     delay(50);
+    
     //ОПРЕДЕЛЕНИЕ ПРЕПЯТСТВИЙ
 
     //ПЕРВЫЙ ДАЛЬНОМЕР
