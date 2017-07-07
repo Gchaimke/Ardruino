@@ -3,6 +3,7 @@
 #include <Ultrasonic.h>
 Ultrasonic ultraleft(3, 2);  // (Trig PIN,Echo PIN)
 Ultrasonic ultraright(5, 4); // (Trig PIN,Echo PIN)
+
 long cm1, cm2;
 // переменные двигателей
 int speed1_1 = 6;
@@ -12,6 +13,7 @@ int speed2_2 = 11;
 int moving = 1;
 int rotate = 0;
 int rotate_side = 1;
+int SPEED = 70;
 // переменные таймеров анти-залипания
 int timer1 = 0;
 int timer2 = 0;
@@ -32,7 +34,6 @@ void setup() {
   randomSeed(analogRead(0));
   //включение реле
   digitalWrite(relay, HIGH);
-  Serial.begin(9600); 
 }
 
 // РАБОЧИЙ ЦИКЛ ПРОГРАММЫ
@@ -40,15 +41,6 @@ void loop() {
   //цикл выполняется пока время не достигло endtime
   if (millis() < endtime) {
 
-    Serial.print("Left: ");
-    Serial.print(ultraleft.Ranging(CM)); // CM or INC
-    Serial.print(" cm     " );
-    delay(50);
-    Serial.print("Right: ");
-    Serial.print(ultraright.Ranging(CM)); // CM or INC
-    Serial.println(" cm" );
-    delay(50);
-    
     //ОПРЕДЕЛЕНИЕ ПРЕПЯТСТВИЙ
 
     //ПЕРВЫЙ ДАЛЬНОМЕР
@@ -65,10 +57,7 @@ void loop() {
     //ДВИЖЕНИЕ (min-0 max-255)
     //нет препятствия
     if (cm1 >= 10 && cm2 >= 10) {
-      analogWrite(speed1_1, 150);
-      analogWrite(speed1_2, 0);
-      analogWrite(speed2_1, 150);
-      analogWrite(speed2_2, 0);
+      wheelsMove(1, 1);
       delay(100);
       timer1 = timer1 + 1;
       timer2 = 0;
@@ -78,10 +67,7 @@ void loop() {
 
     //далеко нет препятствий
     if (cm1 >= 40 && cm2 >= 40) {
-      analogWrite(speed1_1, 150);
-      analogWrite(speed1_2, 0);
-      analogWrite(speed2_1, 150);
-      analogWrite(speed2_2, 0);
+      wheelsMove(1, 1);
       delay(100);
       timer4 = timer4 + 1;
       timer1 = 0;
@@ -91,30 +77,20 @@ void loop() {
 
     //препятствие (объезд вправо)
     if (cm1 > 40 && cm2 < 30 && moving != 5) {
-      analogWrite(speed1_1, 150);
-      analogWrite(speed1_2, 0);
-      analogWrite(speed2_1, 100);
-      analogWrite(speed2_2, 0);
+      wheelsMove(1, 0.7);
       delay(random(400, 800));
     }
 
     //препятствие (объезд влево)
     if (cm1 < 30 && cm2 > 40 && moving != 6) {
-      analogWrite(speed1_1, 100);
-      analogWrite(speed1_2, 0);
-      analogWrite(speed2_1, 150);
-      analogWrite(speed2_2, 0);
+      wheelsMove(0.7, 1);
       delay(random(400, 800));
     }
 
     //препятствие (поворот)
     if (cm1 < 10 || cm2 < 10) {
-      analogWrite(speed1_1, 150);
-      analogWrite(speed1_2, 0);
-      analogWrite(speed2_1, 0);
-      analogWrite(speed2_2, 150);
-      delay(random(400, 800));
-    }
+    wheelsMove(1, 0);
+    delay(random(400, 800));
     timer2 = timer2 + 1;
     timer1 = 0;
     timer3 = 0;
@@ -131,18 +107,12 @@ void loop() {
   if (moving == 2 || timer1 > 25 || timer3 > 2 || timer4 > 50) {
     rotate_side = random(1, 3); //рандомная сторона поворота
     if (rotate_side == 1) {
-      analogWrite(speed1_1, 0);
-      analogWrite(speed1_2, 150);
-      analogWrite(speed2_1, 150);
-      analogWrite(speed2_2, 0);
+      wheelsMove(0, 1);
       delay(random(400, 800));
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-      analogWrite(speed1_1, 0);
-      analogWrite(speed1_2, 150);
-      analogWrite(speed2_1, 0);
-      analogWrite(speed2_2, 150);
+      wheelsMove(0, 0);
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -159,5 +129,29 @@ void loop() {
     digitalWrite(speed2_1, LOW);
     digitalWrite(speed2_2, LOW);
   }
+}
+}
 
+void wheelsMove(int a, int b) {
+  if (a > 0 || b > 0) {  //forword
+    digitalWrite(speed1_1, SPEED * a);
+    digitalWrite(speed1_2, 0);
+    digitalWrite(speed2_1, SPEED * b);
+    digitalWrite(speed2_2, 0);
+  } else if(a > 0 || b == 0){ //right
+    digitalWrite(speed1_1, SPEED * a);
+    digitalWrite(speed1_2, 0);
+    digitalWrite(speed2_1, 0);
+    digitalWrite(speed2_2, SPEED * b);
+  }else if(a == 0 || b > 0){ //left
+    digitalWrite(speed1_1, 0);
+    digitalWrite(speed1_2, SPEED * a);
+    digitalWrite(speed2_1, SPEED * b);
+    digitalWrite(speed2_2, 0);
+  }else{ //beckword
+    digitalWrite(speed1_1, 0);
+    digitalWrite(speed1_2, SPEED * a);
+    digitalWrite(speed2_1, 0);
+    digitalWrite(speed2_2, SPEED * b);
+  }
 }
