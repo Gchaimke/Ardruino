@@ -133,17 +133,17 @@ void loop() {
 }
 
 void wheelsMove(int a, int b) {
-  if (a > 0 || b > 0) {  //forword
+  if (a > 0 && b > 0) {  //forword
     digitalWrite(speed1_1, SPEED * a);
     digitalWrite(speed1_2, 0);
     digitalWrite(speed2_1, SPEED * b);
     digitalWrite(speed2_2, 0);
-  } else if(a > 0 || b == 0){ //right
+  } else if(a > 0 && b == 0){ //right
     digitalWrite(speed1_1, SPEED * a);
     digitalWrite(speed1_2, 0);
     digitalWrite(speed2_1, 0);
     digitalWrite(speed2_2, SPEED * b);
-  }else if(a == 0 || b > 0){ //left
+  }else if(a == 0 && b > 0){ //left
     digitalWrite(speed1_1, 0);
     digitalWrite(speed1_2, SPEED * a);
     digitalWrite(speed2_1, SPEED * b);
