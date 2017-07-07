@@ -32,6 +32,7 @@ void setup() {
   randomSeed(analogRead(0));
   //включение реле
   digitalWrite(relay, HIGH);
+  Serial.begin(9600); 
 }
 
 // РАБОЧИЙ ЦИКЛ ПРОГРАММЫ
@@ -39,6 +40,15 @@ void loop() {
   //цикл выполняется пока время не достигло endtime
   if (millis() < endtime) {
 
+    Serial.print("Left: ");
+    Serial.print(ultraleft.Ranging(CM)); // CM or INC
+    Serial.print(" cm     " );
+    delay(50);
+    Serial.print("Right: ");
+    Serial.print(ultraright.Ranging(CM)); // CM or INC
+    Serial.println(" cm" );
+    delay(50);
+    
     //ОПРЕДЕЛЕНИЕ ПРЕПЯТСТВИЙ
 
     //ПЕРВЫЙ ДАЛЬНОМЕР
