@@ -1,8 +1,8 @@
 // ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ
 // переменные ультразвуковых дальномеров
 #include <Ultrasonic.h>
-Ultrasonic ultraleft(3,2);   // (Trig PIN,Echo PIN)
-Ultrasonic ultraright(5,4);  // (Trig PIN,Echo PIN)
+Ultrasonic ultraleft(3, 2);  // (Trig PIN,Echo PIN)
+Ultrasonic ultraright(5, 4); // (Trig PIN,Echo PIN)
 long cm1, cm2;
 // переменные двигателей
 int speed1_1 = 6;
@@ -52,129 +52,102 @@ void loop() {
     delay(50);
 
     //ОПРЕДЕЛЕНИЕ НАПРАВЛЕНИЯ ДВИЖЕНИЯ
-//ДВИЖЕНИЕ (min-0 max-255)
-  //нет препятствия
-  if (cm1 >= 10 && cm2 >= 10) {
-  moving = 1;  
+    //ДВИЖЕНИЕ (min-0 max-255)
+    //нет препятствия
+    if (cm1 >= 10 && cm2 >= 10) {
+      analogWrite(speed1_1, 150);
+      analogWrite(speed1_2, 0);
+      analogWrite(speed2_1, 150);
+      analogWrite(speed2_2, 0);
+      delay(100);
+      timer1 = timer1 + 1;
+      timer2 = 0;
+      timer3 = 0;
+      timer4 = 0;
+    }
+
+    //далеко нет препятствий
+    if (cm1 >= 40 && cm2 >= 40) {
+      analogWrite(speed1_1, 150);
+      analogWrite(speed1_2, 0);
+      analogWrite(speed2_1, 150);
+      analogWrite(speed2_2, 0);
+      delay(100);
+      timer4 = timer4 + 1;
+      timer1 = 0;
+      timer2 = 0;
+      timer3 = 0;
+    }
+
+    //препятствие (объезд вправо)
+    if (cm1 > 40 && cm2 < 30 && moving != 5) {
+      analogWrite(speed1_1, 150);
+      analogWrite(speed1_2, 0);
+      analogWrite(speed2_1, 100);
+      analogWrite(speed2_2, 0);
+      delay(random(400, 800));
+    }
+
+    //препятствие (объезд влево)
+    if (cm1 < 30 && cm2 > 40 && moving != 6) {
+      analogWrite(speed1_1, 100);
+      analogWrite(speed1_2, 0);
+      analogWrite(speed2_1, 150);
+      analogWrite(speed2_2, 0);
+      delay(random(400, 800));
+    }
+
+    //препятствие (поворот)
+    if (cm1 < 10 || cm2 < 10) {
+      analogWrite(speed1_1, 150);
+      analogWrite(speed1_2, 0);
+      analogWrite(speed2_1, 0);
+      analogWrite(speed2_2, 150);
+      delay(random(400, 800));
+    }
+    timer2 = timer2 + 1;
+    timer1 = 0;
+    timer3 = 0;
+    timer4 = 0;
   }
 
-  //далеко нет препятствий
-  if (cm1 >= 40 && cm2 >= 40) {
-  moving = 4;  
-  }
-
-  //препятствие (объезд вправо)
-  if (cm1 > 40 && cm2 < 30 && moving!=5) {
-  moving = 5;  
-  }
-  
-  //препятствие (объезд влево)
-  if (cm1 < 30 && cm2 > 40 && moving!=6) {
-  moving = 6;  
-  }
-
-  //препятствие (поворот)
-  if (cm1 < 10 || cm2 < 10) {
-  moving = 2;  
-  }
-  
   //препятствие (назад)
   if (cm1 < 5 || cm2 < 5) {
-  moving = 3;  
+    moving = 3;
   }
 
-//ДВИЖЕНИЕ (min-0 max-255)
-
-  //движение вперед
-  if (moving == 1) {
-  analogWrite(speed1_1, 150);
-  analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 150);
-  analogWrite(speed2_2, 0);
-  delay(100);  
-  timer1 = timer1+1;
-  timer2=0;
-  timer3=0;
-  timer4=0;
-  }
-  if (moving == 4) {
-  analogWrite(speed1_1, 150);
-  analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 150);
-  analogWrite(speed2_2, 0);
-  delay(100); 
-  timer4=timer4+1; 
-  timer1=0;
-  timer2=0;
-  timer3=0;
-  }
-
+  //ДВИЖЕНИЕ (min-0 max-255)
   //поворот
-  if (moving == 2 || timer1>25 || timer3>2 || timer4>50) {
-  rotate_side = random(1,3); //рандомная сторона поворота  
-  if (rotate_side == 1) {
-  analogWrite(speed1_1, 0);
-  analogWrite(speed1_2, 150);
-  analogWrite(speed2_1, 150);
-  analogWrite(speed2_2, 0);
-  rotate = random(400,800);
-  delay(rotate);    
-  }
-  if (rotate_side == 2) {
-  analogWrite(speed1_1, 150);
-  analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 0);
-  analogWrite(speed2_2, 150);
-  rotate = random(400,800);
-  delay(rotate);
-  }
-  timer2=timer2+1;
-  timer1=0;
-  timer3=0;
-  timer4=0;
-  }
-
-  //объезд вправо
-  if (moving == 5) {
-  analogWrite(speed1_1, 150);
-  analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 100);
-  analogWrite(speed2_2, 0);
-  rotate = random(400,800);
-  delay(rotate);    
+  if (moving == 2 || timer1 > 25 || timer3 > 2 || timer4 > 50) {
+    rotate_side = random(1, 3); //рандомная сторона поворота
+    if (rotate_side == 1) {
+      analogWrite(speed1_1, 0);
+      analogWrite(speed1_2, 150);
+      analogWrite(speed2_1, 150);
+      analogWrite(speed2_2, 0);
+      delay(random(400, 800));
+    }
+    //движение назад
+    if (moving == 3 || timer2 > 2) {
+      analogWrite(speed1_1, 0);
+      analogWrite(speed1_2, 150);
+      analogWrite(speed2_1, 0);
+      analogWrite(speed2_2, 150);
+      delay(500);
+      timer3 = timer3 + 1;
+      timer1 = 0;
+      timer2 = 0;
+      timer4 = 0;
+    }
   }
 
-  //объезд влево
-  if (moving == 6) {
-  analogWrite(speed1_1, 100);
-  analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 150);
-  analogWrite(speed2_2, 0);
-  rotate = random(400,800);
-  delay(rotate);    
-  }
-
-  //движение назад
-  if (moving == 3 || timer2>2) {
-  analogWrite(speed1_1, 0);
-  analogWrite(speed1_2, 150);
-  analogWrite(speed2_1, 0);
-  analogWrite(speed2_2, 150);
-  delay(500);  
-  timer3=timer3+1;
-  timer1=0;
-  timer2=0;
-  timer4=0;
-  }
-  }
-  
   //ОСТАНОВКА РАБОТЫ ЧЕРЕЗ ЗАДАННОЕ ВРЕМЯ
-  if (endtime<millis()) {
-  digitalWrite(relay, LOW);  
-  digitalWrite(speed1_1, LOW);
-  digitalWrite(speed1_2, LOW);
-  digitalWrite(speed2_1, LOW);
-  digitalWrite(speed2_2, LOW);
+  if (endtime < millis()) {
+    digitalWrite(relay, LOW);
+    digitalWrite(speed1_1, LOW);
+    digitalWrite(speed1_2, LOW);
+    digitalWrite(speed2_1, LOW);
+    digitalWrite(speed2_2, LOW);
   }
 
 }
