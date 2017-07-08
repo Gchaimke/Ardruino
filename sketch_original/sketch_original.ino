@@ -23,7 +23,7 @@ int timer4 = 0;
 
 // переменные вентилятора
 int relay=12;
-unsigned long endtime=600000; //автоматическое выключение через 600 секунд
+unsigned long endtime=6000000; //автоматическое выключение через 6000 секунд
 
 // SETUP программы (выполняется 1 раз, при старте)
 void setup() { 
@@ -126,9 +126,9 @@ void loop() {
 
   //движение вперед
   if (moving == 1) {
-  analogWrite(speed1_1, 150);
+  analogWrite(speed1_1, 65);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 150);
+  analogWrite(speed2_1, 65);
   analogWrite(speed2_2, 0);
   delay(100);  
   timer1 = timer1+1;
@@ -137,9 +137,9 @@ void loop() {
   timer4=0;
   }
   if (moving == 4) {
-  analogWrite(speed1_1, 150);
+  analogWrite(speed1_1, 65);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 150);
+  analogWrite(speed2_1, 65);
   analogWrite(speed2_2, 0);
   delay(100); 
   timer4=timer4+1; 
@@ -153,17 +153,17 @@ void loop() {
   rotate_side = random(1,3); //рандомная сторона поворота  
   if (rotate_side == 1) {
   analogWrite(speed1_1, 0);
-  analogWrite(speed1_2, 150);
-  analogWrite(speed2_1, 150);
+  analogWrite(speed1_2, 65);
+  analogWrite(speed2_1, 65);
   analogWrite(speed2_2, 0);
   rotate = random(400,800);
   delay(rotate);    
   }
   if (rotate_side == 2) {
-  analogWrite(speed1_1, 150);
+  analogWrite(speed1_1, 65);
   analogWrite(speed1_2, 0);
   analogWrite(speed2_1, 0);
-  analogWrite(speed2_2, 150);
+  analogWrite(speed2_2, 65);
   rotate = random(400,800);
   delay(rotate);
   }
@@ -175,9 +175,9 @@ void loop() {
 
   //объезд вправо
   if (moving == 5) {
-  analogWrite(speed1_1, 150);
+  analogWrite(speed1_1, 65);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 100);
+  analogWrite(speed2_1, 45);
   analogWrite(speed2_2, 0);
   rotate = random(400,800);
   delay(rotate);    
@@ -185,9 +185,9 @@ void loop() {
 
   //объезд влево
   if (moving == 6) {
-  analogWrite(speed1_1, 100);
+  analogWrite(speed1_1, 45);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 150);
+  analogWrite(speed2_1, 65);
   analogWrite(speed2_2, 0);
   rotate = random(400,800);
   delay(rotate);    
@@ -196,9 +196,9 @@ void loop() {
   //движение назад
   if (moving == 3 || timer2>2) {
   analogWrite(speed1_1, 0);
-  analogWrite(speed1_2, 150);
+  analogWrite(speed1_2, 65);
   analogWrite(speed2_1, 0);
-  analogWrite(speed2_2, 150);
+  analogWrite(speed2_2, 65);
   delay(500);  
   timer3=timer3+1;
   timer1=0;
