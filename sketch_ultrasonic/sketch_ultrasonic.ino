@@ -16,6 +16,7 @@ int moving = 1;
 int rotate = 0;
 int rotate_side = 1;
 const int SPEED = 60;
+
 // переменные таймеров анти-залипания
 int timer1 = 0;
 int timer2 = 0;
@@ -61,7 +62,7 @@ void loop() {
     //ДВИЖЕНИЕ (min-0 max-255)
     //нет препятствия
     if (cm1 >= 10 && cm2 >= 10) {
-      wheelsMove(HIGH, HIGH);
+      wheelsMove("HIGH", "HIGH");
       delay(100);
       timer1 = timer1 + 1;
       timer2 = 0;
@@ -71,7 +72,7 @@ void loop() {
 
     //далеко нет препятствий
     if (cm1 >= 40 && cm2 >= 40) {
-      wheelsMove(HIGH, HIGH);
+      wheelsMove("HIGH", "HIGH");
       delay(100);
       timer4 = timer4 + 1;
       timer1 = 0;
@@ -81,19 +82,19 @@ void loop() {
 
     //препятствие (объезд вправо)
     if (cm1 > 40 && cm2 < 30 && moving != 5) {
-      wheelsMove(HIGH, HIGH);
+      wheelsMove("HIGH", "HIGH");
       delay(random(400, 800));
     }
 
     //препятствие (объезд влево)
     if (cm1 < 30 && cm2 > 40 && moving != 6) {
-      wheelsMove(HIGH, HIGH);
+      wheelsMove("HIGH", "HIGH");
       delay(random(400, 800));
     }
 
     //препятствие (поворот)
     if (cm1 < 10 || cm2 < 10) {
-    wheelsMove(HIGH, 0);
+    wheelsMove("HIGH", "LOW");
     delay(random(400, 800));
     timer2 = timer2 + 1;
     timer1 = 0;
@@ -103,7 +104,7 @@ void loop() {
 
   //препятствие (назад)
   if (cm1 <= 5 || cm2 <= 5) {
-    wheelsMove(LOW, LOW);
+    wheelsMove("LOW", "LOW");
     delay(random(400, 800));
     timer2 = timer2 + 1;
     timer1 = 0;
@@ -111,12 +112,12 @@ void loop() {
     timer4 = 0;
     rotate_side = random(1, 3); //рандомная сторона поворота
     if (rotate_side == 1) {
-      wheelsMove(0, HIGH);
+      wheelsMove("LOW", "HIGH");
       delay(random(400, 800));
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-      wheelsMove(HIGH, LOW);
+      wheelsMove("HIGH", "LOW");
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -129,12 +130,12 @@ void loop() {
   if (moving == 2 || timer1 > 25 || timer3 > 2 || timer4 > 50) {
     rotate_side = random(1, 3); //рандомная сторона поворота
     if (rotate_side == 1) {
-      wheelsMove(LOW, HIGH);
+      wheelsMove("LOW", "HIGH");
       delay(random(400, 800));
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-[      wheelsMove(HIGH, LOW);
+      wheelsMove("HIGH", "LOW");
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -155,39 +156,41 @@ void loop() {
 }
 
 void wheelsMove(String a, String b) {
+  String high = "HIGH";
+  String low = "LOW";
   // Иди вперед
-  if (a > 0 && b > 0) {    
-    digitalWrite(speed1_1, a);
-    digitalWrite(speed1_2, 0);
-    digitalWrite(speed2_1, b);
-    digitalWrite(speed2_2, 0);
+  if (a.equals(high) && b.equals(high)) {    
+    digitalWrite(speed1_1, HIGH);
+    digitalWrite(speed1_2, LOW);
+    digitalWrite(speed2_1, HIGH);
+    digitalWrite(speed2_2, LOW);
     analogWrite(ENA, 55);
     analogWrite(ENB, 55);
  } 
  // Поверни на вправо
-  else if(a > 0 && b == 0){
-    digitalWrite(speed1_1, a);
-    digitalWrite(speed1_2, 0);
-    digitalWrite(speed2_1, 0);
-    digitalWrite(speed2_2, 0);
+  else if(a.equals(high) && b.equals(low)){
+    digitalWrite(speed1_1, HIGH);
+    digitalWrite(speed1_2, LOW);
+    digitalWrite(speed2_1, LOW);
+    digitalWrite(speed2_2, LOW);
     analogWrite(ENA, 55);
     analogWrite(ENB, 55);
   }
   // Поверни на лево
-  else if(a == 0 && b > 0){
-    digitalWrite(speed1_1, 0);
-    digitalWrite(speed1_2, 0);
-    digitalWrite(speed2_1, b);
-    digitalWrite(speed2_2, 0);
+  else if(a.equals(low) && b.equals(high)){
+    digitalWrite(speed1_1, LOW);
+    digitalWrite(speed1_2, LOW);
+    digitalWrite(speed2_1, HIGH);
+    digitalWrite(speed2_2, LOW);
     analogWrite(ENA, 55);
     analogWrite(ENB, 55);
   }
   // Иди назад
   else{
-    digitalWrite(speed1_1, 0);
-    digitalWrite(speed1_2, a);
-    digitalWrite(speed2_1, 0);
-    digitalWrite(speed2_2, b);
+    digitalWrite(speed1_1, LOW);
+    digitalWrite(speed1_2, HIGH);
+    digitalWrite(speed2_1, LOW);
+    digitalWrite(speed2_2, HIGH);
     analogWrite(ENA, 55);
     analogWrite(ENB, 55);
   }
