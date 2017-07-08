@@ -2,20 +2,20 @@
 // переменные ультразвуковых дальномеров
 #include <Ultrasonic.h>
 Ultrasonic ultraleft(3, 2);  // (Trig PIN,Echo PIN)
-Ultrasonic ultraright(5, 4); // (Trig PIN,Echo PIN)
+Ultrasonic ultraright(11, 4); // (Trig PIN,Echo PIN)
 
 long cm1, cm2;
 // переменные двигателей
-int speed1_1 = 12;
-int speed1_2 = 11;
-int speed2_1 = 10;
-int speed2_2 = 9;
-int ENA = 8;
-int ENB = 7;
+int speed1_1 = 9;
+int speed1_2 = 8;
+int speed2_1 = 7;
+int speed2_2 = 6;
+int ENA = 10;
+int ENB = 5;
 int moving = 1;
 int rotate = 0;
 int rotate_side = 1;
-int SPEED = 70;
+const int SPEED = 60;
 // переменные таймеров анти-залипания
 int timer1 = 0;
 int timer2 = 0;
@@ -134,7 +134,7 @@ void loop() {
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-      wheelsMove(HIGH, LOW);
+[      wheelsMove(HIGH, LOW);
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -156,39 +156,39 @@ void loop() {
 
 void wheelsMove(String a, String b) {
   // Иди вперед
-  //if (a > 0 && b > 0) {    
+  if (a > 0 && b > 0) {    
     digitalWrite(speed1_1, a);
     digitalWrite(speed1_2, 0);
     digitalWrite(speed2_1, b);
     digitalWrite(speed2_2, 0);
     analogWrite(ENA, 55);
     analogWrite(ENB, 55);
- //} 
-  // Поверни на вправо
-  //else if(a > 0 && b == 0){
-  //  digitalWrite(speed1_1, a);
-  //  digitalWrite(speed1_2, 0);
-  //  digitalWrite(speed2_1, 0);
-  //  digitalWrite(speed2_2, 0);
-  //  analogWrite(ENA, 55);
-  //  analogWrite(ENB, 55);
- // }
+ } 
+ // Поверни на вправо
+  else if(a > 0 && b == 0){
+    digitalWrite(speed1_1, a);
+    digitalWrite(speed1_2, 0);
+    digitalWrite(speed2_1, 0);
+    digitalWrite(speed2_2, 0);
+    analogWrite(ENA, 55);
+    analogWrite(ENB, 55);
+  }
   // Поверни на лево
-  //else if(a == 0 && b > 0){
-  //  digitalWrite(speed1_1, 0);
-  //  digitalWrite(speed1_2, 0);
-  //  digitalWrite(speed2_1, b);
-  // digitalWrite(speed2_2, 0);
-  //  analogWrite(ENA, 55);
-  //  analogWrite(ENB, 55);
-  //}
+  else if(a == 0 && b > 0){
+    digitalWrite(speed1_1, 0);
+    digitalWrite(speed1_2, 0);
+    digitalWrite(speed2_1, b);
+    digitalWrite(speed2_2, 0);
+    analogWrite(ENA, 55);
+    analogWrite(ENB, 55);
+  }
   // Иди назад
-  //else{
-  //  digitalWrite(speed1_1, 0);
-  //  digitalWrite(speed1_2, a);
-   // digitalWrite(speed2_1, 0);
-  // digitalWrite(speed2_2, b);
-   // analogWrite(ENA, 55);
-   // analogWrite(ENB, 55);
-  //}
+  else{
+    digitalWrite(speed1_1, 0);
+    digitalWrite(speed1_2, a);
+    digitalWrite(speed2_1, 0);
+    digitalWrite(speed2_2, b);
+    analogWrite(ENA, 55);
+    analogWrite(ENB, 55);
+  }
 }
