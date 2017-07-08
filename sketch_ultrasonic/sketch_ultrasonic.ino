@@ -15,7 +15,7 @@ int ENB = 5;
 int moving = 1;
 int rotate = 0;
 int rotate_side = 1;
-const int SPEED = 60;
+const int SPEED = 100;
 
 // переменные таймеров анти-залипания
 int timer1 = 0;
@@ -164,8 +164,8 @@ void wheelsMove(String a, String b) {
     digitalWrite(speed1_2, LOW);
     digitalWrite(speed2_1, HIGH);
     digitalWrite(speed2_2, LOW);
-    analogWrite(ENA, 55);
-    analogWrite(ENB, 55);
+    analogWrite(ENA, SPEED);
+    analogWrite(ENB, SPEED);
  } 
  // Поверни на вправо
   else if(a.equals(high) && b.equals(low)){
@@ -173,8 +173,8 @@ void wheelsMove(String a, String b) {
     digitalWrite(speed1_2, LOW);
     digitalWrite(speed2_1, LOW);
     digitalWrite(speed2_2, LOW);
-    analogWrite(ENA, 55);
-    analogWrite(ENB, 55);
+    analogWrite(ENA, SPEED);
+    analogWrite(ENB, SPEED);
   }
   // Поверни на лево
   else if(a.equals(low) && b.equals(high)){
@@ -182,8 +182,8 @@ void wheelsMove(String a, String b) {
     digitalWrite(speed1_2, LOW);
     digitalWrite(speed2_1, HIGH);
     digitalWrite(speed2_2, LOW);
-    analogWrite(ENA, 55);
-    analogWrite(ENB, 55);
+    analogWrite(ENA, SPEED);
+    analogWrite(ENB, SPEED);
   }
   // Иди назад
   else{
@@ -191,7 +191,7 @@ void wheelsMove(String a, String b) {
     digitalWrite(speed1_2, HIGH);
     digitalWrite(speed2_1, LOW);
     digitalWrite(speed2_2, HIGH);
-    analogWrite(ENA, 55);
-    analogWrite(ENB, 55);
+    analogWrite(ENA, SPEED);
+    analogWrite(ENB, SPEED);
   }
 }
