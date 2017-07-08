@@ -6,10 +6,12 @@ Ultrasonic ultraright(5, 4); // (Trig PIN,Echo PIN)
 
 long cm1, cm2;
 // переменные двигателей
-int speed1_1 = 6;
-int speed1_2 = 9;
+int speed1_1 = 12;
+int speed1_2 = 11;
 int speed2_1 = 10;
-int speed2_2 = 11;
+int speed2_2 = 9;
+int ENA = 8;
+int ENB = 7;
 int moving = 1;
 int rotate = 0;
 int rotate_side = 1;
@@ -27,8 +29,10 @@ void setup() {
   //назначение портов
   pinMode(speed1_1, OUTPUT);
   pinMode(speed1_2, OUTPUT);
+  pinMode (ENA, OUTPUT);
   pinMode(speed2_1, OUTPUT);
   pinMode(speed2_2, OUTPUT);
+  pinMode (ENB, OUTPUT);
   pinMode(relay, OUTPUT);
   //генерация рандомного числа со свободной ножки
   randomSeed(analogRead(0));
@@ -57,7 +61,7 @@ void loop() {
     //ДВИЖЕНИЕ (min-0 max-255)
     //нет препятствия
     if (cm1 >= 10 && cm2 >= 10) {
-      wheelsMove(0.5, 0.5);
+      wheelsMove(HIGH, HIGH);
       delay(100);
       timer1 = timer1 + 1;
       timer2 = 0;
@@ -67,7 +71,7 @@ void loop() {
 
     //далеко нет препятствий
     if (cm1 >= 40 && cm2 >= 40) {
-      wheelsMove(0.5, 0.5);
+      wheelsMove(HIGH, HIGH);
       delay(100);
       timer4 = timer4 + 1;
       timer1 = 0;
@@ -77,19 +81,19 @@ void loop() {
 
     //препятствие (объезд вправо)
     if (cm1 > 40 && cm2 < 30 && moving != 5) {
-      wheelsMove(0.5, 0.25);
+      wheelsMove(HIGH, HIGH);
       delay(random(400, 800));
     }
 
     //препятствие (объезд влево)
     if (cm1 < 30 && cm2 > 40 && moving != 6) {
-      wheelsMove(0.25, 0.5);
+      wheelsMove(HIGH, HIGH);
       delay(random(400, 800));
     }
 
     //препятствие (поворот)
     if (cm1 < 10 || cm2 < 10) {
-    wheelsMove(0.5, 0);
+    wheelsMove(HIGH, 0);
     delay(random(400, 800));
     timer2 = timer2 + 1;
     timer1 = 0;
@@ -99,7 +103,7 @@ void loop() {
 
   //препятствие (назад)
   if (cm1 <= 5 || cm2 <= 5) {
-    wheelsMove(0, 0);
+    wheelsMove(LOW, LOW);
     delay(random(400, 800));
     timer2 = timer2 + 1;
     timer1 = 0;
@@ -107,12 +111,12 @@ void loop() {
     timer4 = 0;
     rotate_side = random(1, 3); //рандомная сторона поворота
     if (rotate_side == 1) {
-      wheelsMove(0, 0.5);
+      wheelsMove(0, HIGH);
       delay(random(400, 800));
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-      wheelsMove(0.5, 0);
+      wheelsMove(HIGH, LOW);
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -125,12 +129,12 @@ void loop() {
   if (moving == 2 || timer1 > 25 || timer3 > 2 || timer4 > 50) {
     rotate_side = random(1, 3); //рандомная сторона поворота
     if (rotate_side == 1) {
-      wheelsMove(0, 0.5);
+      wheelsMove(LOW, HIGH);
       delay(random(400, 800));
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-      wheelsMove(0.5, 0);
+      wheelsMove(HIGH, LOW);
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -150,33 +154,41 @@ void loop() {
 }
 }
 
-void wheelsMove(double a, double b) {
+void wheelsMove(String a, String b) {
   // Иди вперед
-  if (a > 0 && b > 0) {    
-    digitalWrite(speed1_1, SPEED * a);
+  //if (a > 0 && b > 0) {    
+    digitalWrite(speed1_1, a);
     digitalWrite(speed1_2, 0);
-    digitalWrite(speed2_1, SPEED * b);
+    digitalWrite(speed2_1, b);
     digitalWrite(speed2_2, 0);
-  } 
+    analogWrite(ENA, 55);
+    analogWrite(ENB, 55);
+ //} 
   // Поверни на вправо
-  else if(a > 0 && b == 0){
-    digitalWrite(speed1_1, SPEED * a);
-    digitalWrite(speed1_2, 0);
-    digitalWrite(speed2_1, 0);
-    digitalWrite(speed2_2, 0);
-  }
+  //else if(a > 0 && b == 0){
+  //  digitalWrite(speed1_1, a);
+  //  digitalWrite(speed1_2, 0);
+  //  digitalWrite(speed2_1, 0);
+  //  digitalWrite(speed2_2, 0);
+  //  analogWrite(ENA, 55);
+  //  analogWrite(ENB, 55);
+ // }
   // Поверни на лево
-  else if(a == 0 && b > 0){
-    digitalWrite(speed1_1, 0);
-    digitalWrite(speed1_2, 0);
-    digitalWrite(speed2_1, SPEED * b);
-    digitalWrite(speed2_2, 0);
-  }
+  //else if(a == 0 && b > 0){
+  //  digitalWrite(speed1_1, 0);
+  //  digitalWrite(speed1_2, 0);
+  //  digitalWrite(speed2_1, b);
+  // digitalWrite(speed2_2, 0);
+  //  analogWrite(ENA, 55);
+  //  analogWrite(ENB, 55);
+  //}
   // Иди назад
-  else{
-    digitalWrite(speed1_1, 0);
-    digitalWrite(speed1_2, SPEED);
-    digitalWrite(speed2_1, 0);
-    digitalWrite(speed2_2, SPEED);
-  }
+  //else{
+  //  digitalWrite(speed1_1, 0);
+  //  digitalWrite(speed1_2, a);
+   // digitalWrite(speed2_1, 0);
+  // digitalWrite(speed2_2, b);
+   // analogWrite(ENA, 55);
+   // analogWrite(ENB, 55);
+  //}
 }
