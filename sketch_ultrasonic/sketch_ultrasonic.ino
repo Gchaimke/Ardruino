@@ -57,7 +57,7 @@ void loop() {
     //ДВИЖЕНИЕ (min-0 max-255)
     //нет препятствия
     if (cm1 >= 10 && cm2 >= 10) {
-      wheelsMove(1, 1);
+      wheelsMove(0.5, 0.5);
       delay(100);
       timer1 = timer1 + 1;
       timer2 = 0;
@@ -67,7 +67,7 @@ void loop() {
 
     //далеко нет препятствий
     if (cm1 >= 40 && cm2 >= 40) {
-      wheelsMove(1, 1);
+      wheelsMove(0.5, 0.5);
       delay(100);
       timer4 = timer4 + 1;
       timer1 = 0;
@@ -77,19 +77,19 @@ void loop() {
 
     //препятствие (объезд вправо)
     if (cm1 > 40 && cm2 < 30 && moving != 5) {
-      wheelsMove(1, 0.7);
+      wheelsMove(0.5, 0.25);
       delay(random(400, 800));
     }
 
     //препятствие (объезд влево)
     if (cm1 < 30 && cm2 > 40 && moving != 6) {
-      wheelsMove(0.7, 1);
+      wheelsMove(0.25, 0.5);
       delay(random(400, 800));
     }
 
     //препятствие (поворот)
     if (cm1 < 10 || cm2 < 10) {
-    wheelsMove(1, 0);
+    wheelsMove(0.5, 0);
     delay(random(400, 800));
     timer2 = timer2 + 1;
     timer1 = 0;
@@ -98,21 +98,39 @@ void loop() {
   }
 
   //препятствие (назад)
-  if (cm1 < 5 || cm2 < 5) {
-    moving = 3;
-  }
+  if (cm1 <= 5 || cm2 <= 5) {
+    wheelsMove(0, 0);
+    delay(random(400, 800));
+    timer2 = timer2 + 1;
+    timer1 = 0;
+    timer3 = 0;
+    timer4 = 0;
+    rotate_side = random(1, 3); //рандомная сторона поворота
+    if (rotate_side == 1) {
+      wheelsMove(0, 0.5);
+      delay(random(400, 800));
+    }
+    //движение назад
+    if (moving == 3 || timer2 > 2) {
+      wheelsMove(0.5, 0);
+      delay(500);
+      timer3 = timer3 + 1;
+      timer1 = 0;
+      timer2 = 0;
+      timer4 = 0;
+  }}
 
   //ДВИЖЕНИЕ (min-0 max-255)
   //поворот
   if (moving == 2 || timer1 > 25 || timer3 > 2 || timer4 > 50) {
     rotate_side = random(1, 3); //рандомная сторона поворота
     if (rotate_side == 1) {
-      wheelsMove(0, 1);
+      wheelsMove(0, 0.5);
       delay(random(400, 800));
     }
     //движение назад
     if (moving == 3 || timer2 > 2) {
-      wheelsMove(0, 0);
+      wheelsMove(0.5, 0);
       delay(500);
       timer3 = timer3 + 1;
       timer1 = 0;
@@ -132,7 +150,7 @@ void loop() {
 }
 }
 
-void wheelsMove(int a, int b) {
+void wheelsMove(double a, double b) {
   // Иди вперед
   if (a > 0 && b > 0) {    
     digitalWrite(speed1_1, SPEED * a);
