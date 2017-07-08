@@ -41,12 +41,23 @@ void setup() {
   randomSeed(analogRead(0));
   //включение реле
   digitalWrite(relay, HIGH);
+  Serial.begin(9600);
 } 
 
 // РАБОЧИЙ ЦИКЛ ПРОГРАММЫ
 void loop() { 
   //цикл выполняется пока время не достигло endtime
   if (millis()<endtime) {
+
+  //Поверка сканеров растояния через монитор порта
+  Serial.print("Left: ");
+  Serial.print(ultraleft.Ranging(CM)); // CM or INC
+  Serial.print(" cm     " );
+  delay(50);
+  Serial.print("Right: ");
+  Serial.print(ultraright.Ranging(CM)); // CM or INC
+  Serial.println(" cm" );
+  delay(50);
     
   //ОПРЕДЕЛЕНИЕ ПРЕПЯТСТВИЙ
   
@@ -126,9 +137,9 @@ void loop() {
 
   //движение вперед
   if (moving == 1) {
-  analogWrite(speed1_1, 65);
+  analogWrite(speed1_1, 73);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 65);
+  analogWrite(speed2_1, 70);
   analogWrite(speed2_2, 0);
   delay(100);  
   timer1 = timer1+1;
@@ -137,9 +148,9 @@ void loop() {
   timer4=0;
   }
   if (moving == 4) {
-  analogWrite(speed1_1, 65);
+  analogWrite(speed1_1, 73);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 65);
+  analogWrite(speed2_1, 70);
   analogWrite(speed2_2, 0);
   delay(100); 
   timer4=timer4+1; 
@@ -153,17 +164,17 @@ void loop() {
   rotate_side = random(1,3); //рандомная сторона поворота  
   if (rotate_side == 1) {
   analogWrite(speed1_1, 0);
-  analogWrite(speed1_2, 65);
-  analogWrite(speed2_1, 65);
+  analogWrite(speed1_2, 73);
+  analogWrite(speed2_1, 70);
   analogWrite(speed2_2, 0);
   rotate = random(400,800);
   delay(rotate);    
   }
   if (rotate_side == 2) {
-  analogWrite(speed1_1, 65);
+  analogWrite(speed1_1, 73);
   analogWrite(speed1_2, 0);
   analogWrite(speed2_1, 0);
-  analogWrite(speed2_2, 65);
+  analogWrite(speed2_2, 70);
   rotate = random(400,800);
   delay(rotate);
   }
@@ -175,7 +186,7 @@ void loop() {
 
   //объезд вправо
   if (moving == 5) {
-  analogWrite(speed1_1, 65);
+  analogWrite(speed1_1, 70);
   analogWrite(speed1_2, 0);
   analogWrite(speed2_1, 45);
   analogWrite(speed2_2, 0);
@@ -187,7 +198,7 @@ void loop() {
   if (moving == 6) {
   analogWrite(speed1_1, 45);
   analogWrite(speed1_2, 0);
-  analogWrite(speed2_1, 65);
+  analogWrite(speed2_1, 70);
   analogWrite(speed2_2, 0);
   rotate = random(400,800);
   delay(rotate);    
@@ -196,9 +207,9 @@ void loop() {
   //движение назад
   if (moving == 3 || timer2>2) {
   analogWrite(speed1_1, 0);
-  analogWrite(speed1_2, 65);
+  analogWrite(speed1_2, 73);
   analogWrite(speed2_1, 0);
-  analogWrite(speed2_2, 65);
+  analogWrite(speed2_2, 70);
   delay(500);  
   timer3=timer3+1;
   timer1=0;
