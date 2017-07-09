@@ -2,7 +2,8 @@
 ## ardruino modules to control cleaner-robot
 
 ## 10/07/17 
-``` added new module - L298NDualMotor, now to compile .ino file, module folder must to be in "C:\Users\user\Documents\Arduino\libraries\"
+``` 
+	added new module - L298NDualMotor, now to compile .ino file, module folder must to be in "C:\Users\user\Documents\Arduino\libraries\"
 	.ino file fixed. lets check?
 ```
 
