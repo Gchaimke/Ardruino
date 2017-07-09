@@ -1,5 +1,8 @@
 # Ardruino
 ## ardruino modules to control cleaner-robot
+- [x] Finish my changes
+- [X] Push my commits to GitHub
+- [ ] lets check
 
 ## 10/07/17 
 ``` 
