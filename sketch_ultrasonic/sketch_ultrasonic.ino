@@ -1,6 +1,8 @@
 // ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ //
 // переменные ультразвуковых дальномеров
 #include <Ultrasonic.h>
+#include <L298NDualMotor.h>
+// переменные ultrasonic sensors
 Ultrasonic ultraleft(3, 2);     // (Trig PIN,Echo PIN)
 Ultrasonic ultraright(11, 4);   // (Trig PIN,Echo PIN)
 
