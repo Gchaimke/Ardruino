@@ -1,4 +1,4 @@
-#include <L298N.h>
+#include <L298NDualMotor.h>
 
 //pin definition
 #define EN 9
@@ -6,7 +6,7 @@
 #define IN2 7
 
 //create a motor instance
-L298N motor(EN, IN1, IN2);
+L298NDualMotor motor(10, 9, 8, 5, 7, 6);    //(ENL, IN1L, IN2L, ENR, IN1R, IN2R)  , startting defoult speed 100
 
 //initial speed
 unsigned short theSpeed = 0;
