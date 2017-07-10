@@ -2,9 +2,16 @@
 ## ardruino modules to control cleaner-robot
 - [x] Finish my changes
 - [X] Push my commits to GitHub
-- [ ] lets check
+- [X] lets check
+- [X] Add examples to module
+- [ ] Motor calibration
 
-## 10/07/17 
+## 10/07/17  Chaim Gorbov
+```
+	Added tow examples to check motor module.
+```
+
+## 10/07/17  Chaim Gorbov
 ``` 
 	added new module - L298NDualMotor.
 	Now to compile .ino file, module folder must
