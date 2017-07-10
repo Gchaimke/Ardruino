@@ -168,7 +168,7 @@ void loop() {
 
     //ОСТАНОВКА РАБОТЫ ЧЕРЕЗ ЗАДАННОЕ ВРЕМЯ
     if (endtime < millis()) {
-      //digitalWrite(relay, LOW);
+      digitalWrite(relay, LOW); //torn off FAN
       motor.stop();
     }
   }
