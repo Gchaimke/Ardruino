@@ -6,21 +6,21 @@
 - [X] Add examples to module
 - [ ] Motor calibration
 
-## 10/07/17  Chaim Gorbov
+## 10/07/17  	Chaim Gorbov
 ```
 	Added tow examples to check motor module.
 ```
 
-## 10/07/17  Chaim Gorbov
-``` 
+## 10/07/17 	 Chaim Gorbov
+```
 	added new module - L298NDualMotor.
 	Now to compile .ino file, module folder must
 	to be in "C:\Users\user\Documents\Arduino\libraries\"
 	.ino file fixed. lets check?
 ```
 
-## 09/07/17
+## 09/07/17		Yossi Gorbov
  Закончил заниматься с двигателем. Тянет в право. Начинаем с замедлением И разработкой поворотов.
 
-## 08/07/17
+## 08/07/17 	Yossi Gorbov
  Ты был прав. Есть ещё две ножки для скорости. ena enb. Но там по два пина . И что с ними делать ?! Проснешься, позвони мне...
