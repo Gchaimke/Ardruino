@@ -5,13 +5,22 @@
 - [X] lets check
 - [X] Add examples to module
 - [ ] Motor calibration
+- [ ] Start and stop slowly
+- [ ] При нахождении препятствий, остановись, рассчитай разницу дальности, поверни туда где дальше.
+- [ ] Заказать оставшиеся датчики.
 
+
+## 11/07/17     Yossi
+...
+    Added Ultrasonic serial port check. 
+	Sorted Libraries and folders.
+...
 ## 10/07/17  	Chaim Gorbov
 ```
 	Added tow examples to check motor module.
 ```
 
-## 10/07/17 	 Chaim Gorbov
+## 10/07/17 	Chaim Gorbov
 ```
 	added new module - L298NDualMotor.
 	Now to compile .ino file, module folder must

@@ -36,7 +36,8 @@ void setup() {
   digitalWrite(relay, HIGH);
   //генерация рандомного числа со свободной ножки
   randomSeed(analogRead(0));
-  //включение реле
+
+  Serial.begin(9600); // Monitor port
 
 }
 
@@ -54,6 +55,16 @@ void loop() {
     cmR = ultraright.Ranging(CM);   //посылается и принимается звуковой сигнал
     delay(50);                      //небольшая задержка, для предотвращения смешения сигналов со вторым дальномером
 
+    //Debug of ultrasonic sensors
+    Serial.print("Left: ");
+    Serial.print(ultraleft.Ranging(CM)); // CM or INC
+    Serial.print(" cm     " );
+    delay(50);
+    Serial.print("Right: ");
+    Serial.print(ultraright.Ranging(CM)); // CM or INC
+    Serial.println(" cm" );
+    delay(50);
+  
     //ОПРЕДЕЛЕНИЕ НАПРАВЛЕНИЯ ДВИЖЕНИЯ
     //нет препятствия
     if (cmL >= 10 && cmR >= 10) {
