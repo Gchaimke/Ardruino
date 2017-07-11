@@ -7,6 +7,8 @@
 - [ ] Motor calibration
 - [ ] Start and stop slowly
 - [ ] При нахождении препятствий, остановись, рассчитай разницу дальности, поверни туда где дальше.
+	  Например: левой 10, правый 12 - повернинемного влево. Если больничная разница - приблизься к
+	  самому ближнему и обойди.
 - [ ] Заказать оставшиеся датчики.
 
 
@@ -15,6 +17,7 @@
     Added Ultrasonic serial port check. 
 	Sorted Libraries and folders.
 ...
+
 ## 10/07/17  	Chaim Gorbov
 ```
 	Added tow examples to check motor module.
