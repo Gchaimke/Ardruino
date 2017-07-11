@@ -1,10 +1,10 @@
 #include <L298NDualMotor.h>
-
+/*
 //pin definition
 #define EN 9
 #define IN1 8
 #define IN2 7
-
+*/
 //create a motor instance
 L298NDualMotor motor(10, 9, 8, 5, 7, 6);    //(ENL, IN1L, IN2L, ENR, IN1R, IN2R)  , startting defoult speed 100
 
