@@ -1,0 +1,30 @@
+http://www.ebay.com/itm/5Pin-HY-SRF05-Ultrasonic-Distance-Sensor-Module-Replace-SR04-For-Arduino-ST-/172257978706?epid=878114187&hash=item281b602952:g:~ugAAOSwgY9XdBWa
+
+
+Features:
+Detecting range: 3cm-4M
+Best in 30 degree angle
+Electronic brick compatible interface
+5VDC power supply
+Breadboard friendly
+Dual transducer
+Arduino library ready
+
+Specification:
+Working Voltage: 5V (DC)
+Static current: Less than 2mA.
+Output signal: Electric frequency signal, high level 5V, low level 0V.
+Sensor angle: Not more than 15 degrees.
+Detection distance: 2cm-450cm.
+High precision: Up to 0.3cm
+Working tempter:-20C___+60C
+Weight: 10g
+Size: 45x 21mm (L x W)
+
+Connector Pin:
+VCC
+Trig (T)
+Echo(R)
+OUT
+GND 
+ 

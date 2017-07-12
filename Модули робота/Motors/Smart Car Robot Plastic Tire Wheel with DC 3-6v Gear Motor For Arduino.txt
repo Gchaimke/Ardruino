@@ -1,0 +1,18 @@
+http://www.ebay.com/itm/Hot-1x-2x-Smart-Car-Robot-Plastic-Tire-Wheel-with-DC-3-6v-Gear-Motor-For-Arduino-/231791305948?var=&epid=581527172&hash=item35f7d6a4dc:m:mBzZxY2LoR4iC1AfR1PlYtw
+
+
+Description:
+Motor:
+Voltage: DC 3-6V
+Current:100-120ma
+Redution: 48:1
+RPM(With tire):100-240
+Tire Diameter: About 66mm
+Car Sspped(M/minut):20-48
+Motor Size: approx. 70*22*18mm
+Noise: <65dB
+
+
+Tire Parameter
+Center Hole: 5.3mm*3.66mm
+Wheel Size:65*26mm
