@@ -4,6 +4,7 @@
 - [X] Push my commits to GitHub
 - [X] lets check
 - [X] Add examples to module
+- [X] Add TEST/Voltmeter
 - [ ] Motor calibration
 - [ ] Start and stop slowly
 - [ ] При нахождении препятствий, остановись, рассчитай разницу дальности, поверни туда где дальше.
