@@ -56,6 +56,7 @@ void loop() {
     delay(50);                      //небольшая задержка, для предотвращения смешения сигналов со вторым дальномером
 
     //Debug of ultrasonic sensors
+    Serial.println("initializing distance");
     Serial.print("Left: ");
     Serial.print(ultraleft.Ranging(CM)); // CM or INC
     Serial.print(" cm     " );
@@ -67,113 +68,45 @@ void loop() {
   
     //ОПРЕДЕЛЕНИЕ НАПРАВЛЕНИЯ ДВИЖЕНИЯ
     //нет препятствия
-    if (cmL >= 10 && cmR >= 10) {
-      if (cmL > 1 && cmL != 0) {
-        motor.forward(100 / cmL);
-      } else {
-        motor.stop();
-      }
-      delay(100);
-      timer1 = timer1 + 1;
-      timer2 = 0;
-      timer3 = 0;
-      timer4 = 0;
-      moving = 1;
+    if (cmL >= 20 && cmR >= 20) { 
+      Serial.println("Going Forward");
+      motor.forward();
+      delay(500);
     }
 
-    //далеко нет препятствий
-    if (cmL >= 40 && cmR >= 40) {
-      motor.forward();
-      delay(100);
-      timer4 = timer4 + 1;
-      timer1 = 0;
-      timer2 = 0;
-      timer3 = 0;
-      moving = 2;
-    }
+    //препятствие (Have a barrier from the right)
+    if (cmL >= 10 && cmR < 10 ) {
+        Serial.println("Going left because have a barrier from the right");
+        motor.left();
+        delay(100);
+        motor.forward();
+        delay(100);
+        motor.right();
+        delay(100); }
 
-    //препятствие (объезд влево)
-    if (cmL > 40 && cmR < 30 && moving != 5) {
-      motor.right();
-      delay(300);
-      motor.forward();
-      delay(random(400, 800));
-      motor.left();
-      delay(300);
-      moving = 3;
-    }
-
-    //препятствие (объезд вправо)
-    if (cmL < 30 && cmR > 40 && moving != 6) {
-      motor.left();
-      delay(300);
-      motor.forward();
-      delay(random(400, 800));
-      motor.right();
-      delay(300);
-      moving = 4;
-    }
+    //препятствие (Have a barrier from the left side)
+    if (cmL < 10 && cmR >= 10 ) {
+        Serial.println("Going right because have a barrier from the left");
+        motor.right();
+        delay(100);
+        motor.forward();
+        delay(100);
+        motor.left();
+        delay(100); }
 
     //препятствие (поворот)
-    if (cmL < 10 || cmR < 10) {
-      motor.right();
-      delay(random(400, 800));
-      timer2 = timer2 + 1;
-      timer1 = 0;
-      timer3 = 0;
-      timer4 = 0;
-      moving = 5;
-    }
-
-    //препятствие (назад)
-    if (cmL <= 5 || cmR <= 5) {
+    if (cmL <=7 || cmR <= 7 && cmL==cmR) {
+      Serial.println("Going back 1");
       motor.backward();
-      delay(random(400, 800));
-      timer2 = timer2 + 1;
-      timer1 = 0;
-      timer3 = 0;
-      timer4 = 0;
       rotate_side = random(1, 3); //рандомная сторона поворота
       if (rotate_side == 1) {
+        Serial.println("Going randomaly left");
         motor.left();
         delay(random(400, 800));
       } else {
+        Serial.println("Going randomaly right");
         motor.right();
         delay(random(400, 800));
-      }
-      moving = 6;
-    }
-
-    //движение назад
-    if (moving == 3 || timer2 > 2) {
-      motor.backward();
-      delay(500);
-      timer3 = timer3 + 1;
-      timer1 = 0;
-      timer2 = 0;
-      timer4 = 0;
-    }
-
-    //поворот
-    if (moving == 2 || timer1 > 25 || timer3 > 2 || timer4 > 50) {
-      rotate_side = random(1, 3); //рандомная сторона поворота
-      if (rotate_side == 1) {
-        motor.left();
-        delay(random(400, 800));
-        }
-        else {
-        motor.right();
-        delay(random(400, 800));
-             }
-
-    //движение назад
-    if (moving == 3 || timer2 > 2) {
-        motor.backward();
-        delay(500);
-        timer3 = timer3 + 1;
-        timer1 = 0;
-        timer2 = 0;
-        timer4 = 0;
       }
     }
 
