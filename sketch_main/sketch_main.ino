@@ -77,6 +77,9 @@ void loop() {
     //препятствие (Have a barrier from the right)
     if (cmL >= 10 && cmR < 10 ) {
         Serial.println("Going left because have a barrier from the right");
+        motor.stop();
+        motor.backward();
+        delay(100);
         motor.left();
         delay(100);
         motor.forward();
@@ -87,6 +90,9 @@ void loop() {
     //препятствие (Have a barrier from the left side)
     if (cmL < 10 && cmR >= 10 ) {
         Serial.println("Going right because have a barrier from the left");
+        motor.stop();
+        motor.backward();
+        delay(100);
         motor.right();
         delay(100);
         motor.forward();

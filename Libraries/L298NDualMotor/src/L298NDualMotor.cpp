@@ -13,8 +13,8 @@ L298NDualMotor::L298NDualMotor(uint8_t pinEnableL, uint8_t pinIN1L, uint8_t pinI
   _pinEnableR = pinEnableR;
   _pinIN1R = pinIN1R;
   _pinIN2R = pinIN2R;
-  _pwmValL = 80;
-  _pwmValR = 80;
+  _pwmValL = 70;
+  _pwmValR = 70;
   _isMoving = false;
   _canMove = true;
   _lastMs = 0;
