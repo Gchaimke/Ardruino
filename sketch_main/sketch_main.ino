@@ -33,84 +33,95 @@ void setup() {
   // Fan Pin
   pinMode(relay, OUTPUT);
   digitalWrite(relay, HIGH);
-  //генерация рандомного числа со свободной ножки
-  randomSeed(analogRead(0));
-
   Serial.begin(9600); // Monitor port
-
 }
 
 
-                  // РАБОЧИЙ ЦИКЛ ПРОГРАММЫ //
+
+// РАБОЧИЙ ЦИКЛ ПРОГРАММЫ //
 void loop() {
   //цикл выполняется пока время не достигло endtime
   if (millis() < endtime) {
     
     //ОПРЕДЕЛЕНИЕ НАПРАВЛЕНИЯ ДВИЖЕНИЯ
     distance();
-
-    //Stuck on the place !
-    if (cmLCounter > 20 || cmRCounter > 20) {
+    //нет препятствия
+    if (cmL > 10 && cmR > 10){
+    Serial.println("Normal Forward");
+    motor.forward(70, 80);
+    delay(300);
+    counter++;
+    //Zero Counter
+    if (counter == 20) {
+      Serial.println("Going back, zero counter");
+      counter = 0;
+      Serial.println("Zero counter");
+      motor.backwardFor(300);
+      rotate_side = random(1, 3); //рандомная сторона поворота
+      if (rotate_side == 1) {
+        Serial.println("Going randomaly left, zero counter");
+        motor.left();
+        delay(random(200, 400));
+      } else {
+        Serial.println("Going randomaly right, zero counter");
+        motor.right();
+        delay(random(200, 400));
+      }
+    }
+    }    
+    
+      //Stuck on the place !
+      if (cmLCounter > 20 || cmRCounter > 20) {
       Serial.println("Stuck on the place !");
        motor.stop();
-       motor.backward();
-       delay(300);
-       distance();
+       motor.backwardFor(300);
        motor.right();
-       delay(random(200, 400));
-       motor.forward();
+       delay(random(200, 500));
+       motor.forward(60, 70);
        delay(100);
        motor.left();
-       delay(random(200, 400));
+       delay(random(200, 500));
        cmLCounter = 0;
        cmRCounter = 0;
+       Serial.println("Zero cmL and cmR counters");
     }
     
-    //нет препятствия
-    if (cmL >= 20 && cmR >= 20 && counter < 15 && (cmLCounter < 20 && cmRCounter < 20)) { 
-      Serial.println("Going Forward");
-      motor.forward();
-      delay(300);
-      counter++;
-      Serial.println("counter is =" + counter);
-    }
-
     //препятствие (Have a barrier from the left side)
     if (cmR >= 10  && cmL < 10 && (cmLCounter < 20 && cmRCounter < 20)) {
         Serial.println("Going right because have a barrier from the left");
         motor.stop();
-        motor.backward();
-        delay(300);
-        distance();
+        delay(200);
+        motor.backwardFor(300);
         motor.right();
         delay(random(200, 400));
-        motor.forward();
-        delay(100);
+        motor.forward(60, 70);
+        delay(200);
         motor.left();
-        delay(random(200, 400)); }
+        delay(random(200, 400)); 
+        }
 
     //препятствие (Have a barrier from the right)
     if (cmL >= 10 && cmR < 10 && (cmLCounter < 20 && cmRCounter < 20)) {
         Serial.println("Going left because have a barrier from the right");
         motor.stop();
-        motor.backward();
-        delay(300);
-        distance();
+        delay(200);
+        motor.backwardFor(300);
         motor.left();
         delay(random(200, 400));
-        motor.forward();
-        delay(100);
+        motor.forward(60, 70);
+        delay(200);
         motor.right();
         delay(random(200, 400));
+        }
 
-    //препятствие (поворот)
-    if (((cmL <=7 && cmR <= 7 && cmL==cmR && (cmLCounter < 20 && cmRCounter < 20)) || counter == 15)) {
-      Serial.println("Going back 1");
-      counter = 0;
-      Serial.println("Zero counter");
-      motor.backward();
-      rotate_side = random(1, 3); //рандомная сторона поворота
-      if (rotate_side == 1) {
+    //препятствие (Turn around)
+    if (cmL < 7 && cmR < 7) {
+      Serial.println("Going back because have the wall");
+      motor.backwardFor(300);
+      motor.stop();
+      delay(200);
+      distance();
+      if (cmL > cmR) {
         Serial.println("Going randomaly left");
         motor.left();
         delay(random(200, 400));
@@ -121,13 +132,14 @@ void loop() {
       }
     }
 
+
     //ОСТАНОВКА РАБОТЫ ЧЕРЕЗ ЗАДАННОЕ ВРЕМЯ
     if (endtime < millis()) {
       digitalWrite(relay, LOW); //torn off FAN
       motor.stop();
     }
   }
- }}
+ }
 void distance(){
     //ОПРЕДЕЛЕНИЕ ПРЕПЯТСТВИЙ ДАЛЬНОМЕТРАМИ
     //ЛЕВЫЙ ДАЛЬНОМЕР

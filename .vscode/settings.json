@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "wiring.c": "cpp"
+        "wiring.c": "cpp",
+        "wiring_analog.c": "cpp"
     }
 }
