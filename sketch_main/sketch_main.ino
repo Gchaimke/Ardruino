@@ -77,7 +77,8 @@ void loop() {
       //More left turns that needed
       if (leftTurns > 10) {
         motor.stop();
-        motor.backwardFor(400);
+        motor.backward();
+        delay(250);
         motor.left();
         delay(random(300, 1500));
         leftTurns = 0;
@@ -87,7 +88,8 @@ void loop() {
       //More left turns that needed
       if (rightTurns > 10) {
         motor.stop();
-        motor.backwardFor(400);
+        motor.backward();
+        delay(250);
         motor.right();
         delay(random(300, 1500));
         rightTurns = 0;
