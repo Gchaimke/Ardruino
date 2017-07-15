@@ -73,7 +73,6 @@ void L298NDualMotor::forward(unsigned short pwmValL, unsigned short pwmValR) {
   analogWrite(_pinEnableR, pwmValR);
 
   _isMoving = true;
-  Serial.println("Going forward" );
 }
 
 
@@ -87,7 +86,6 @@ void L298NDualMotor::left() {
   analogWrite(_pinEnableR, _pwmValR);
 
   _isMoving = true;
-  Serial.println("Going left" );
 }
 void L298NDualMotor::right() {
   digitalWrite(_pinIN1L, HIGH);
@@ -99,7 +97,6 @@ void L298NDualMotor::right() {
   analogWrite(_pinEnableR, _pwmValR);
 
   _isMoving = true;
-  Serial.println("Going right" );
 }
 
 void L298NDualMotor::forwardFor(unsigned long delay, CallBackFunction callback) {
@@ -121,7 +118,6 @@ void L298NDualMotor::forwardFor(unsigned long delay, CallBackFunction callback) 
 
 void L298NDualMotor::forwardFor(unsigned long delay) {
   this->forwardFor(delay, fakeCallback);
-  Serial.println("Going forward" + delay + " micro-seconds" );
 }
 
 
@@ -135,10 +131,9 @@ void L298NDualMotor::backward() {
   analogWrite(_pinEnableR, _pwmValR);
 
   _isMoving = true;
-  Serial.println("Going backward" );
 }
 
-void L298NDualMotor::backward(short pwmValL, short pwmValR) {
+void L298NDualMotor::backward(unsigned short pwmValL, unsigned short pwmValR) {
   digitalWrite(_pinIN1L, LOW);
   digitalWrite(_pinIN2L, HIGH);
   digitalWrite(_pinIN1R, LOW);
@@ -148,7 +143,6 @@ void L298NDualMotor::backward(short pwmValL, short pwmValR) {
   analogWrite(_pinEnableR, _pwmValR);
 
   _isMoving = true;
-  Serial.println("Going backward on user speed" );
 }
 
 void L298NDualMotor::backwardFor(unsigned long delay, CallBackFunction callback) {
@@ -170,7 +164,6 @@ void L298NDualMotor::backwardFor(unsigned long delay, CallBackFunction callback)
 
 void L298NDualMotor::backwardFor(unsigned long delay) {
   this->backwardFor(delay, fakeCallback);
-  Serial.println("Going back" + delay + " micro-seconds" );
 }
 
 void L298NDualMotor::run(uint8_t direction) {
