@@ -138,6 +138,19 @@ void L298NDualMotor::backward() {
   Serial.println("Going backward" );
 }
 
+void L298NDualMotor::backward(short pwmValL, short pwmValR) {
+  digitalWrite(_pinIN1L, LOW);
+  digitalWrite(_pinIN2L, HIGH);
+  digitalWrite(_pinIN1R, LOW);
+  digitalWrite(_pinIN2R, HIGH);
+
+  analogWrite(_pinEnableL, _pwmValL);
+  analogWrite(_pinEnableR, _pwmValR);
+
+  _isMoving = true;
+  Serial.println("Going backward on user speed" );
+}
+
 void L298NDualMotor::backwardFor(unsigned long delay, CallBackFunction callback) {
 
   if ((_lastMs == 0) && _canMove) {

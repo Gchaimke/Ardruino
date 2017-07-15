@@ -25,18 +25,19 @@ int rightTurns = 0;
 
 // переменные вентилятора
 int relay = 12;
-unsigned long endtime = 600000; //автоматическое выключение через 600 секунд
+unsigned long endtime = 1800000; //автоматическое выключение через 30 minutes
 
 
-      // SETUP программы (выполняется 1 раз, при старте) //
-void setup() {
-  //set motor speed
-  motor.setSpeed(100);
-  // Fan Pin
-  pinMode(relay, OUTPUT);
-  digitalWrite(relay, HIGH);
-  Serial.begin(9600); // Monitor port
-}
+// SETUP программы (выполняется 1 раз, при старте) //
+  void setup() 
+  {
+    //set motor speed
+    motor.setSpeed(100);
+    // Fan Pin
+    pinMode(relay, OUTPUT);
+    digitalWrite(relay, HIGH);
+    Serial.begin(9600); // Monitor port
+  }
 
 
 
@@ -48,28 +49,34 @@ void loop() {
     //ОПРЕДЕЛЕНИЕ НАПРАВЛЕНИЯ ДВИЖЕНИЯ
     distance();
     //нет препятствия
-    if (cmL > 10 && cmR > 10){
-    Serial.println("Normal Forward");
-    motor.forward(70, 80);
-    delay(300);
-    counter++;
+    do
+    {
+      Serial.println("No barriers at the front of me");
+      motor.forward(70, 80);
+      delay(random(100, 500));
+      counter++;
+      distance();
+    }
+    while (cmL > 20 && cmR > 20 && counter < 30);
+    
     //Zero Counter
-    if (counter == 20) {
+    if (counter == 30) {
       Serial.println("Going back, zero counter");
       counter = 0;
       Serial.println("Zero counter");
-      motor.backwardFor(300);
-      rotate_side = random(1, 3); //рандомная сторона поворота
+      motor.backward();
+      delay(500);                                  //go back for 1 second
+      rotate_side = random(1, 3);                   //рандомная сторона поворота
       if (rotate_side == 1) {
         Serial.println("Going randomaly left, zero counter");
         motor.left();
+        delay(random(400, 800));
         leftTurns++;
-        delay(random(200, 400));
       } else {
         Serial.println("Going randomaly right, zero counter");
         motor.right();
+        delay(random(400, 800));
         rightTurns++;
-        delay(random(200, 400));
       }
     }
     }   
@@ -77,19 +84,19 @@ void loop() {
       //More left turns that needed
       if (leftTurns > 10) {
         motor.stop();
-        motor.backward();
-        delay(250);
+        motor.backward(); 
+        delay(800);                                  //go back for 1 second
         motor.left();
-        delay(random(300, 1500));
+        delay(random(400, 1500));
         leftTurns = 0;
         Serial.println("Zero counter of left turns");
       }
       
-      //More left turns that needed
+      //More right turns that needed
       if (rightTurns > 10) {
         motor.stop();
-        motor.backward();
-        delay(250);
+        motor.backward(); 
+        delay(800);                                  //go back for 1 second
         motor.right();
         delay(random(300, 1500));
         rightTurns = 0;
@@ -100,7 +107,8 @@ void loop() {
       if (cmLCounter > 15 || cmRCounter > 15) {
        Serial.println("Stuck on the place !");
        motor.stop();
-       motor.backwardFor(400);
+       motor.backward(); 
+       delay(800);                                  //go back for 1 second
        motor.right();
        rightTurns++;
        delay(random(200, 500));
@@ -115,54 +123,79 @@ void loop() {
     }
     
     //препятствие (Have a barrier from the left side)
-    if (cmR >= 15  && cmL < 15 && (cmLCounter < 20 && cmRCounter < 20)) {
+    if (cmR > 15  && cmL < 10 && (cmLCounter < 20 && cmRCounter < 20)) {
         Serial.println("Going right because have a barrier from the left");
         motor.stop();
         delay(200);
-        motor.backwardFor(300);
-        motor.right();
-        rightTurns++;
-        delay(random(200, 400));
-        motor.forward(60, 70);
-        delay(200);
-        motor.left();
-        leftTurns++;
-        delay(random(200, 400)); 
+        while (cmL < 10)
+         {
+          motor.right();
+          Serial.print("Right...  ");
+          rightTurns++;
+          distance();
+         }
         }
 
     //препятствие (Have a barrier from the right)
+    if (cmL > 15 && cmR < 10 && (cmLCounter < 20 && cmRCounter < 20)) {
+        Serial.println("Going left because have a barrier from the right");
+        motor.stop();
+        delay(200);
+        while (cmR < 10)
+         {
+          motor.left();
+          Serial.print("Left...  ");
+          leftTurns++;
+          distance();
+         }
+        }
+
+    //near the wall (Have a barrier from the left side)
+    if (cmR >= 10  && cmL < 10 && (cmLCounter < 20 && cmRCounter < 20)) {
+        Serial.println("Going right because have a barrier from the left");
+        motor.stop();
+        delay(200);
+        motor.backward(); 
+        delay(500);                                  //go back for 1 second
+        motor.right();
+        delay(random(400, 800));
+        rightTurns++;
+        motor.forward(60, 70);
+        delay(200);
+        }
+
+    //near the wall (Have a barrier from the right)
     if (cmL >= 10 && cmR < 10 && (cmLCounter < 20 && cmRCounter < 20)) {
         Serial.println("Going left because have a barrier from the right");
         motor.stop();
         delay(200);
-        motor.backwardFor(300);
+        motor.backward(); 
+        delay(200);                                  //go back for 1 second
         motor.left();
+        delay(random(400, 800));
         leftTurns++;
-        delay(random(200, 400));
         motor.forward(60, 70);
         delay(200);
-        motor.right();
-        rightTurns++;
-        delay(random(200, 400));
         }
 
     //препятствие (Turn around)
     if (cmL < 7 && cmR < 7) {
       Serial.println("Going back because have the wall");
-      motor.backwardFor(300);
+      motor.backward(); 
+      delay(200);                                  //go back for 1 second
       motor.stop();
       delay(200);
       distance();
       if (cmL > cmR) {
         Serial.println("Going randomaly left");
         motor.left();
+        delay(random(400, 800));
         leftTurns++;
-        delay(random(200, 400));
       } else {
         Serial.println("Going randomaly right");
         motor.right();
+        delay(random(400, 800));
         rightTurns++;
-        delay(random(200, 400));
       }
     }
 
@@ -173,7 +206,7 @@ void loop() {
       motor.stop();
     }
   }
- }
+ 
 void distance(){
     //ОПРЕДЕЛЕНИЕ ПРЕПЯТСТВИЙ ДАЛЬНОМЕТРАМИ
     //ЛЕВЫЙ ДАЛЬНОМЕР
