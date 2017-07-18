@@ -54,10 +54,10 @@ void loop() {
       counter++;
       distance();
     }
-    while (cmL > 20 && cmR > 20 && counter < 100);
+    while ((cmL > 20 && cmR > 20) || counter < 40);
     
     //Zero Counter
-    if (counter == 30) {
+    if (counter > 40) {
       Serial.println("Going back, zero counter");
       counter = 0;
       Serial.println("Zero counter");
