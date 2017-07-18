@@ -49,12 +49,12 @@ void loop() {
     do
     {
       Serial.println("No barriers at the front of me");
-      motor.forward(70, 80);
-      delay(random(100, 500));
+      motor.forward();
+      delay(100);
       counter++;
       distance();
     }
-    while (cmL > 20 && cmR > 20 && counter < 30);
+    while (cmL > 20 && cmR > 20 && counter < 100);
     
     //Zero Counter
     if (counter == 30) {
@@ -67,12 +67,12 @@ void loop() {
       if (rotate_side == 1) {
         Serial.println("Going randomaly left, zero counter");
         motor.left();
-        delay(random(400, 800));
+        delay(random(500, 800));
         leftTurns++;
       } else {
         Serial.println("Going randomaly right, zero counter");
         motor.right();
-        delay(random(400, 800));
+        delay(random(500, 800));
         rightTurns++;
       }
     }   
@@ -107,14 +107,19 @@ void loop() {
        motor.stop();
        motor.backward(); 
        delay(800);                                                    //go back for 1 second
-       motor.right();
-       rightTurns++;
-       delay(random(200, 500));
-       motor.forward(60, 70);
-       delay(100);
-       motor.left();
-       leftTurns++;
-       delay(random(200, 500));
+       rotate_side = random(1, 3);                                      //рандомная сторона поворота
+      if (rotate_side == 1) {
+        Serial.println("Going randomaly left, zero counter");
+        motor.left();
+        delay(random(500, 800));
+        leftTurns++;
+      } else {
+        Serial.println("Going randomaly right, zero counter");
+        motor.right();
+        delay(random(500, 800));
+        rightTurns++;
+      }
+       motor.forward();
        cmLCounter = 0;
        cmRCounter = 0;
        Serial.println("Zero cmL and cmR counters");
@@ -126,7 +131,7 @@ void loop() {
         Serial.println("Going right because have a barrier from the left");
         motor.stop();
         delay(200);
-        while (cmL < 10)
+        while (cmL < 10*1.5)
          {
            motor.right();
            Serial.print("Right...  ");
@@ -141,7 +146,7 @@ void loop() {
         Serial.println("Going left because have a barrier from the right");
         motor.stop();
         delay(200);
-        while (cmR < 10)
+        while (cmR < 10*1.5)
          {
           motor.left();
           Serial.print("Left...  ");
