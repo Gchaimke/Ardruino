@@ -17,11 +17,11 @@ int rotate_side = 1;
 long cmL, cmR;
 
 // Timers
-int counter = 0;
-int cmLCounter = 0;
-int cmRCounter = 0;
-int leftTurns = 0;
-int rightTurns = 0;
+byte counter = 0;
+byte cmLCounter = 0;
+byte cmRCounter = 0;
+byte leftTurns = 0;
+byte rightTurns = 0;
 
 // переменные вентилятора
 int relay = 12;
@@ -31,7 +31,7 @@ unsigned long endtime = 1800000; //автоматическое выключен
 void setup() 
  {
    //set motor speed
-   motor.setSpeed(100);
+   motor.setSpeed(90);
    // Fan Pin
    pinMode(relay, OUTPUT);
    digitalWrite(relay, HIGH);
@@ -54,10 +54,10 @@ void loop() {
       counter++;
       distance();
     }
-    while ((cmL > 20 && cmR > 20) || counter < 40);
+    while (cmL > 20 && cmR > 20 && counter < 20);
     
     //Zero Counter
-    if (counter > 40) {
+    if (counter > 20) {
       Serial.println("Going back, zero counter");
       counter = 0;
       Serial.println("Zero counter");
