@@ -87,6 +87,19 @@ void L298NDualMotor::left() {
 
   _isMoving = true;
 }
+
+void L298NDualMotor::left(unsigned short pwmVal) {
+  digitalWrite(_pinIN1L, LOW);
+  digitalWrite(_pinIN2L, HIGH);
+  digitalWrite(_pinIN1R, HIGH);
+  digitalWrite(_pinIN2R, LOW);
+
+  analogWrite(_pinEnableL, pwmVal);
+  analogWrite(_pinEnableR, pwmVal);
+
+  _isMoving = true;
+}
+
 void L298NDualMotor::right() {
   digitalWrite(_pinIN1L, HIGH);
   digitalWrite(_pinIN2L, LOW);
@@ -95,6 +108,18 @@ void L298NDualMotor::right() {
 
   analogWrite(_pinEnableL, _pwmValL);
   analogWrite(_pinEnableR, _pwmValR);
+
+  _isMoving = true;
+}
+
+void L298NDualMotor::right(unsigned short pwmVal) {
+  digitalWrite(_pinIN1L, HIGH);
+  digitalWrite(_pinIN2L, LOW);
+  digitalWrite(_pinIN1R, LOW);
+  digitalWrite(_pinIN2R, HIGH);
+
+  analogWrite(_pinEnableL, pwmVal);
+  analogWrite(_pinEnableR, pwmVal);
 
   _isMoving = true;
 }

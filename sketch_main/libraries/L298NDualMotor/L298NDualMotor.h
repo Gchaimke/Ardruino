@@ -21,7 +21,9 @@ class L298NDualMotor {
     void forward(unsigned short pwmVal);
     void forward(unsigned short pwmValL, unsigned short pwmValR);
     void left();
+    void left(unsigned short pwmVal);
     void right();
+    void right(unsigned short pwmVal);
     void forwardFor(unsigned long delay, CallBackFunction callback);
     void forwardFor(unsigned long delay);
     void backward();
