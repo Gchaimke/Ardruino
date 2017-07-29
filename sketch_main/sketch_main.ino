@@ -30,7 +30,7 @@ unsigned long endtime = 1800000; //автоматическое выключен
 void setup() 
  {
    //set motor speed
-   motor.setSpeed(70);
+   motor.setSpeed(75);
    // Fan Pin
    pinMode(relay, OUTPUT);
    digitalWrite(relay, HIGH);
@@ -49,30 +49,32 @@ void loop() {
     {
       Serial.println("No barriers at the front of me");
       motor.forward();
-      delay(200);
+      delay(50);
       forwardCounter++;
       distance();
     }
-    while (cmL > 15 && cmR > 15 && forwardCounter < 30);
+    while (cmL > 15 && cmR > 15 && forwardCounter < 50);
     
     //Zero forwardCounter
-    if (forwardCounter > 30) {
+    if (forwardCounter > 50 && leftTurns < 30 && rightTurns < 30) {
       Serial.println("Going back, zero the forwardCounter");
       forwardCounter =0;
       motor.backward();
       delay(random(500, 3000));                                                      //go back for 1 second
-      rotate_side = random(1, 3);                                      //рандомная сторона поворота
-      if (rotate_side == 1) {
+      rotate_side = random(4);                                      //рандомная сторона поворота
+      if (rotate_side == 1 || rotate_side == 0) {
         Serial.println("Going randomaly left, after zeroing forwardCounter");
         motor.left(turnSpeed);
-        delay(random(500, 1500));
+        delay(random(3000, 8000));
         leftTurns++;
       } else {
         Serial.println("Going randomaly right, after zeroing forwardCounter");
         motor.right(turnSpeed);
-        delay(random(500, 1500));
+        delay(random(3000, 8000));
         rightTurns++;
       }
+      leftTurns =0;
+      rightTurns =0;
       distance();
     }   
 
@@ -133,6 +135,8 @@ void loop() {
       {
         Serial.println("Going right because have a barrier from the left");
         motor.stop();
+        motor.backward();
+        delay(200);
         while (cmL < 15*1.5 && (leftTurns < 20 && rightTurns < 20))
          {
            motor.right(turnSpeed);
@@ -149,6 +153,8 @@ void loop() {
       {
         Serial.println("Going left because have a barrier from the right");
         motor.stop();
+        motor.backward();
+        delay(200);
         while (cmR < 15*1.5 && (leftTurns < 20 && rightTurns < 20))
          {
           motor.left(turnSpeed);
@@ -167,7 +173,7 @@ void loop() {
         motor.stop();
         motor.backward(); 
         delay(200); 
-        while (cmL < 10  && (leftTurns < 20 && rightTurns < 20))
+        while (cmL < 15  && (leftTurns < 20 && rightTurns < 20))
          {
            motor.right(turnSpeed);
            Serial.print("Near the wall going Right...  ");
@@ -184,7 +190,7 @@ void loop() {
         motor.stop();
         motor.backward(); 
         delay(200); 
-        while (cmR < 10 && (leftTurns < 20 && rightTurns < 20))
+        while (cmR < 15 && (leftTurns < 20 && rightTurns < 20))
          {
            motor.left(turnSpeed);
            Serial.print("Near the wall going Le]]ft...  ");
@@ -206,7 +212,7 @@ void loop() {
        if (rotate_side == 1) {
           Serial.println("Turn around left");
           motor.left(turnSpeed);
-          delay(7000);
+          delay(7000); 
         } else {
         
           motor.right(turnSpeed);
@@ -227,17 +233,17 @@ void loop() {
 void distance(){
   //ЛЕВЫЙ ДАЛЬНОМЕР
   cmL = ultraleft.Ranging(CM);    //посылается и принимается звуковой сигнал
-  delay(100);                      //небольшая задержка, для предотвращения смешения сигналов со вторым дальномером
+  delay(25);                      //небольшая задержка, для предотвращения смешения сигналов со вторым дальномером
   //ПРАВЫЙ ДАЛЬНОМЕР
   cmR = ultraright.Ranging(CM);   //посылается и принимается звуковой сигнал
-  delay(100);                      //небольшая задержка, для предотвращения смешения сигналов со вторым дальномером
+  delay(25);                      //небольшая задержка, для предотвращения смешения сигналов со вторым дальномером
 
   //Debug of ultrasonic sensors
   Serial.println("initializing distance");
   Serial.print("Left: ");
   Serial.print(ultraleft.Ranging(CM)); // CM or INC
   Serial.print(" cm     " );
-  delay(50);
+  delay(25);
   Serial.print("Right: ");
   Serial.print(ultraright.Ranging(CM)); // CM or INC
   Serial.println(" cm" );
