@@ -1,0 +1,29 @@
+﻿http://www.ebay.com/itm/1S-2S-4S-3S-5S-BMS-PCB-Protection-Board-For-18650-Li-ion-Lithium-Battery-Cell/192217997007?ssPageName=STRK%3AMEBIDX%3AIT&var=492143612395&_trksid=p2057872.m2749.l2649
+
+
+Specification:
+Brand new
+Size: approx.45x56mm
+Working current: 30A
+Balanced current: 60mA
+Over current: 60A
+Temperature range: -30 - +80?
+Over charge detection voltage: 4.28+ 0.05 V
+Over charging voltage: 4.095-4.195V
+Over discharge voltage: 2.55±0.08
+Over charge detection delay time: 0.1s
+Short circuit detection delay time: 100ms
+Over current detection delay time: 500 ms
+Short circuit protection function: there is, disconnect the load can be self recovery.
+Fine workmanship and durable.
+
+Main function:
+Over charge protection, over discharge protection function and short circuit protection.
+Over current protection function, band balance.
+
+Interface definition:
+Charging port of the plate and the discharge port is the same, both positive and B- connecting.
+Battery "-", P- charging port and port on the negative electrode.
+B-, N-, P- pads are all over the hole, the hole diameter of the pad is 3.5mm.
+The battery charging detection interface with DC output in the form of needle. Do the same mouth.
+When the N- is not wiring.
