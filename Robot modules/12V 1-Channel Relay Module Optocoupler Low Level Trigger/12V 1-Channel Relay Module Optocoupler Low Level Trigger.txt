@@ -1,0 +1,23 @@
+﻿http://www.ebay.com/itm/12V-1-Channel-Relay-Module-Optocoupler-Low-Level-Trigger-Expansion-Board-Arduino/112053316365?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649
+
+
+Product introduction:
+1. This module conform international safety standard, the isolation groove between control areas and load area
+2. With optical coupling isolation, triggering more reliable, more stable
+3. The double FR-4 circuit board design
+4. Have power and relay operation instructions.The LED will be lit when relay on
+5. Signal input with a low level signal, the common pin and the normally opened pin will connected
+6. Relay can directly control all kinds of equipment and load
+7. One normally open pin and a normally closed pin
+8. Blue KF301 terminal, more convenient
+9. Module Size: 53x18x18.5mm/2.08*0.7*0.72"
+Module interface:
+Input Part:
+VCC: Connect to power positive (according to the relay voltage range)
+GND: Connect to power negative
+IN: Relay module trigger pin (high level trigger)
+Output Part:
+Normally Opened (NO) : Normally open pin of relay. NO pin is not connect to COM pin when relay off.NO pin is connect to COM pin when relay on
+Common pin (COM) : Common pin of the relay
+Normally closed (NC) : Normally close pin of relay.NC pin is connect to COM pin when relay off.NC pin is not connect to COM pin when relay on
+Onboard 12V, 10A/250VAC, 10A 30VDC relay

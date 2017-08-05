@@ -1,0 +1,55 @@
+﻿http://www.ebay.com/itm/10pcs-IR-Infrared-Obstacle-Avoidance-Sensor-for-Arduino-Smart-Car-Robot-Gadgets/291867080506?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649
+
+
+Product Description
+Module Feathers:
+The sensor module light is adaptable to the environment, it has 
+a pair of infrared transmitting and receiving tube, tube infrared 
+emit a certain frequency, when detecting direction meet with 
+obstacles (reflecting surface), reflected infrared receiving tube, 
+after the comparator circuit processing, green indicator will light up,
+at the same time signal output interface to output digital signal 
+(a low level signal), can be through the potentiometer knob adjust 
+the detection distance, effective distance range 2 ~ 30cm, working 
+voltage is 3.3V to 5V. The sensor detection range can be through 
+the potentiometer to adjust and have small interference, easy to 
+assemble, easy to use, etc, can be widely used in robot obstacle avoidance, 
+obstacle avoidance car, line count, and black and white line tracking 
+and so on many occasions.
+
+Module parameters:
+1. when the module detects obstacles in front of the signal, the green 
+indicator on the circuit board light level and at the same time the OUT 
+port output low level signal, the detection module from 2 ~ 30cm, 35°detection 
+Angle, test distance can be adjusted through the potentiometer, adjustable 
+potentiometer clockwise, the detection distance increases; Counter-clockwise 
+tuning potentiometer, detection distance is reduced.
+
+2. sensors, active infrared reflection detection, therefore the reflectivity
+ and shape of the target is the key of the detection range. White one black 
+detection range, minimum maximum; Small area of the object distance, large distance.
+
+3. the sensor module output port OUT can be directly connected to the 
+microcontroller IO port can, also can drive a 5v relay directly; 
+Connection mode: the VCC - VCC; GND - GND; The OUT - the IO
+
+4. the comparator USES the LM393, working stability;
+
+5. can be used for 3 to 5V DC power to power supply module. 
+When power on, the red power indicator light lit;
+
+6. 3 mm screw holes, easy fixed, installation;
+
+7. circuit board size: 3.2cm*1.4cm
+
+8. each module is shipped already compare threshold voltage 
+through the potentiometer to adjust good, not special circumstances, 
+please do not arbitrarily adjust the potentiometer.
+
+Module interface specification:
+1. VCC voltage is 3.3V to 5V converter (which can be directly connected 
+to 5V single-chip microcontroller and 3.3V)
+
+2. GND external GND
+
+3. OUT of small plate digital output interface (0 and 1)
