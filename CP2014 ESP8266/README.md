@@ -5,5 +5,7 @@ You must define the RESET pin as D0.
 In any case, after unpacking and connecting it, bring a program to TEST the wifi.
 Add Board link: https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
 <br>
+<img src="settings.JPG" />
+<img src="board.JPG" />
 <img src="IDE.JPG" />
 <img src="LED.JPG" />
